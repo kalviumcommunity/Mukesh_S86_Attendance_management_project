@@ -2,20 +2,19 @@ package com.school;
 
 public class Main {
     public static void main(String[] args) {
-        Student[] students = new Student[2];
-        Course[] courses = new Course[2];
+        Student[] students = new Student[4];
+        Course[] courses = new Course[3];
 
-        // Initialize and set student details
-        for (int i = 0; i < students.length; i++) {
-            students[i] = new Student();
-            students[i].setDetails(100 + i, "Student" + (i + 1));
-        }
+        // Create students using constructor
+        students[0] = new Student("Alice");
+        students[1] = new Student("Bob");
+        students[2] = new Student("Charlie");
+        students[3] = new Student("Diana");
 
-        // Initialize and set course details
-        for (int i = 0; i < courses.length; i++) {
-            courses[i] = new Course();
-            courses[i].setDetails(200 + i, "Course" + (i + 1));
-        }
+        // Create courses using constructor
+        courses[0] = new Course("Mathematics");
+        courses[1] = new Course("Physics");
+        courses[2] = new Course("Chemistry");
 
         System.out.println("----- Student Details -----");
         for (Student s : students) {
