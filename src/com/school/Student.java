@@ -15,4 +15,11 @@ public class Student {
         System.out.println("Student ID: " + this.studentId);
         System.out.println("Name: " + this.name);
     }
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
