@@ -14,4 +14,11 @@ public class Course {
         System.out.println("Course ID: C" + this.courseId);
         System.out.println("Course Name: " + this.courseName);
     }
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
 }
