@@ -5,19 +5,20 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Student[] students = new Student[4];
-        Course[] courses = new Course[3];
+        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
+        ArrayList<AttendanceRecord> records = new ArrayList<>();
 
         // Create students using constructor
-        students[0] = new Student("Alice", "Grade 10");
-        students[1] = new Student("Bob", "Grade 11");
-        students[2] = new Student("Charlie", "Grade 12");
-        students[3] = new Student("Diana", "Grade 10");
+        students.add(new Student("Alice", "Grade 10"));
+        students.add(new Student("Bob", "Grade 11"));
+        students.add(new Student("Charlie", "Grade 12"));
+        students.add(new Student("Diana", "Grade 10"));
 
         // Create courses using constructor
-        courses[0] = new Course("Mathematics");
-        courses[1] = new Course("Physics");
-        courses[2] = new Course("Chemistry");
+        courses.add(new Course("Mathematics"));
+        courses.add(new Course("Physics"));
+        courses.add(new Course("Chemistry"));
 
         // Create Teacher and Staff objects
         Teacher teacher1 = new Teacher("Mr. Smith", "Mathematics");
@@ -50,15 +51,20 @@ public class Main {
         }
 
         // Attendance Recording
-        List<AttendanceRecord> attendanceLog = new ArrayList<>();
-        attendanceLog.add(new AttendanceRecord(students[0].getId(), courses[0].getCourseId(), "Present"));
-        attendanceLog.add(new AttendanceRecord(students[1].getId(), courses[1].getCourseId(), "Absent"));
-        attendanceLog.add(new AttendanceRecord(students[2].getId(), courses[2].getCourseId(), "Late")); // Invalid status
-        attendanceLog.add(new AttendanceRecord(students[3].getId(), courses[0].getCourseId(), "present")); // Lowercase, should be valid
+        records.add(new AttendanceRecord(students.get(0).getId(), courses.get(0).getCourseId(), "Present"));
+        records.add(new AttendanceRecord(students.get(1).getId(), courses.get(1).getCourseId(), "Absent"));
+        records.add(new AttendanceRecord(students.get(2).getId(), courses.get(2).getCourseId(), "Late")); // Invalid status
+        records.add(new AttendanceRecord(students.get(3).getId(), courses.get(0).getCourseId(), "present")); // Lowercase, should be valid
 
         System.out.println("----- Attendance Records -----");
-        for (AttendanceRecord record : attendanceLog) {
+        for (AttendanceRecord record : records) {
             record.displayRecord();
         }
+
+        // File Storage
+        FileStorageService storage = new FileStorageService();
+        storage.saveData(students, "students.txt");
+        storage.saveData(courses, "courses.txt");
+        storage.saveData(records, "attendance_log.txt");
     }
 }
