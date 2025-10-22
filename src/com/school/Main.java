@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    public static void displaySchoolDirectory(List<Person> people) {
+        System.out.println("----- School Directory (Polymorphic display) -----");
+        for (Person p : people) {
+            p.displayDetails();
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
         ArrayList<Student> students = new ArrayList<>();
         ArrayList<Course> courses = new ArrayList<>();
@@ -50,11 +58,11 @@ public class Main {
             System.out.println();
         }
 
-        // Attendance Recording
-        records.add(new AttendanceRecord(students.get(0).getId(), courses.get(0).getCourseId(), "Present"));
-        records.add(new AttendanceRecord(students.get(1).getId(), courses.get(1).getCourseId(), "Absent"));
-        records.add(new AttendanceRecord(students.get(2).getId(), courses.get(2).getCourseId(), "Late")); // Invalid status
-        records.add(new AttendanceRecord(students.get(3).getId(), courses.get(0).getCourseId(), "present")); // Lowercase, should be valid
+    // Attendance Recording (now passing objects)
+    records.add(new AttendanceRecord(students.get(0), courses.get(0), "Present"));
+    records.add(new AttendanceRecord(students.get(1), courses.get(1), "Absent"));
+    records.add(new AttendanceRecord(students.get(2), courses.get(2), "Late")); // Invalid status
+    records.add(new AttendanceRecord(students.get(3), courses.get(0), "present")); // Lowercase, should be valid
 
         System.out.println("----- Attendance Records -----");
         for (AttendanceRecord record : records) {
@@ -63,6 +71,7 @@ public class Main {
 
         // File Storage
         FileStorageService storage = new FileStorageService();
+        // Save students list (already List<Student>)
         storage.saveData(students, "students.txt");
         storage.saveData(courses, "courses.txt");
         storage.saveData(records, "attendance_log.txt");
