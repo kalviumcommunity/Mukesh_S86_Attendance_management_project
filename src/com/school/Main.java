@@ -17,6 +17,10 @@ public class Main {
         ArrayList<Course> courses = new ArrayList<>();
         ArrayList<AttendanceRecord> records = new ArrayList<>();
 
+        // File storage and attendance service
+        FileStorageService storage = new FileStorageService();
+        AttendanceService attendanceService = new AttendanceService(storage);
+
         // Create students using constructor
         students.add(new Student("Alice", "Grade 10"));
         students.add(new Student("Bob", "Grade 11"));
@@ -58,22 +62,23 @@ public class Main {
             System.out.println();
         }
 
-    // Attendance Recording (now passing objects)
-    records.add(new AttendanceRecord(students.get(0), courses.get(0), "Present"));
-    records.add(new AttendanceRecord(students.get(1), courses.get(1), "Absent"));
-    records.add(new AttendanceRecord(students.get(2), courses.get(2), "Late")); // Invalid status
-    records.add(new AttendanceRecord(students.get(3), courses.get(0), "present")); // Lowercase, should be valid
+        // Attendance Recording using AttendanceService
+        attendanceService.markAttendance(students.get(0), courses.get(0), "Present");
+        attendanceService.markAttendance(students.get(1), courses.get(1), "Absent");
+        // mark by ids using lookup overload
+        attendanceService.markAttendance(students.get(2).getId(), courses.get(2).getCourseId(), "Late", students, courses); // invalid -> becomes "Invalid"
+        attendanceService.markAttendance(students.get(3), courses.get(0), "present");
 
-        System.out.println("----- Attendance Records -----");
-        for (AttendanceRecord record : records) {
-            record.displayRecord();
-        }
+        System.out.println("----- Attendance Records (from AttendanceService) -----");
+        attendanceService.displayAttendanceLog();
 
-        // File Storage
-        FileStorageService storage = new FileStorageService();
-        // Save students list (already List<Student>)
+        // Display attendance for specific student and course
+        attendanceService.displayAttendanceLog(students.get(0));
+        attendanceService.displayAttendanceLog(courses.get(0));
+
+        // Save data using AttendanceService and FileStorageService
         storage.saveData(students, "students.txt");
         storage.saveData(courses, "courses.txt");
-        storage.saveData(records, "attendance_log.txt");
+        attendanceService.saveAttendanceData();
     }
 }
