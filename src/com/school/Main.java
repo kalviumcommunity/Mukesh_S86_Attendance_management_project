@@ -24,10 +24,10 @@ public class Main {
         Student s3 = regService.registerStudent("Charlie", "Grade 12");
         Student s4 = regService.registerStudent("Diana", "Grade 10");
 
-        // Create courses
-        Course c1 = regService.createCourse("Mathematics");
-        Course c2 = regService.createCourse("Physics");
-        Course c3 = regService.createCourse("Chemistry");
+        // Create courses with capacities
+        Course c1 = regService.createCourse("Mathematics", 2); // capacity 2
+        Course c2 = regService.createCourse("Physics", 1);     // capacity 1
+        Course c3 = regService.createCourse("Chemistry", 3);   // capacity 3
 
         // Register teachers and staff
         Teacher teacher1 = regService.registerTeacher("Mr. Smith", "Mathematics");
@@ -54,6 +54,22 @@ public class Main {
         }
 
         System.out.println("----- Course Details -----");
+        for (Course c : regService.getCourses()) {
+            c.displayDetails();
+            System.out.println();
+        }
+
+        // Enroll students in courses (including an over-capacity attempt)
+        System.out.println("----- Enrollments -----");
+        regService.enrollStudentInCourse(s1, c1); // should succeed
+        regService.enrollStudentInCourse(s2, c1); // should succeed (fills c1)
+        regService.enrollStudentInCourse(s3, c1); // should fail (over capacity)
+
+        regService.enrollStudentInCourse(s3, c2); // should succeed
+        regService.enrollStudentInCourse(s4, c2); // should fail (over capacity)
+
+        // Display updated course details after enrollments
+        System.out.println("----- Course Details (After Enrollment) -----");
         for (Course c : regService.getCourses()) {
             c.displayDetails();
             System.out.println();

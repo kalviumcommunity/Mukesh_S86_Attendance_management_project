@@ -19,6 +19,11 @@ public class AttendanceService {
             System.out.println("Cannot mark attendance: student or course is null");
             return;
         }
+        // Optional: only mark attendance if student is enrolled in the course
+        if (!course.getEnrolledStudents().contains(student)) {
+            System.out.println("Cannot mark attendance: " + student.getName() + " is not enrolled in " + course.getCourseName());
+            return;
+        }
         AttendanceRecord record = new AttendanceRecord(student, course, status);
         attendanceLog.add(record);
     }
